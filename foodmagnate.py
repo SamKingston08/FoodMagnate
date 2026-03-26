@@ -129,7 +129,7 @@ class Outlet:
 
   def GetDetails(self):
     Details = "Coordinates: (" + str(self._XCoord) + ", " + str(self._YCoord) + ")     Capacity: " + str(self._Capacity) + "      Maximum Capacity: "
-    Details += str(self._MaxCapacity) + "      Daily Costs: " + str(self._DailyCosts) + "      Visits today: " + str(self._VisitsToday)
+    Details += str(self._MaxCapacity) + "      Daily Costs: £" + str(int(self._DailyCosts)) + ".00" + "      Visits today: " + str(self._VisitsToday)
     return Details
 
 class Company:
@@ -200,9 +200,9 @@ class Company:
   def GetDetails(self):
     Details = ""
     Details += "Name: " + self._Name + "\nType of business: " + self._Category + "\n"
-    Details += "Current balance: " + str(self._Balance) + "\nAverage cost per meal: " + str(self._AvgCostPerMeal) + "\n"
-    Details += "Average price per meal: " + str(self._AvgPricePerMeal) + "\nDaily costs: " + str(self._DailyCosts) + "\n"
-    Details += "Delivery costs: " + str(self.CalculateDeliveryCost()) + "\nReputation: " + str(self._ReputationScore) + "\n\n"
+    Details += "Current balance: £" + str(int(self._Balance)) + ".00" + "\nAverage cost per meal: £" + str(int(self._AvgCostPerMeal)) + ".00" + "\n"
+    Details += "Average price per meal: £" + str(int(self._AvgPricePerMeal)) + ".00" + "\nDaily costs: £" + str(int(self._DailyCosts)) + ".00" + "\n"
+    Details += "Delivery costs: £" + str(int(self.CalculateDeliveryCost())) + ".00" + "\nReputation: " + str(self._ReputationScore) + "\n\n"
     Details += "Number of outlets: " + str(len(self._Outlets)) + "\nOutlets\n"
     for Current in range (1, len(self._Outlets) + 1):
       Details += str(Current) + ". " + self._Outlets[Current - 1].GetDetails() + "\n"
@@ -216,14 +216,14 @@ class Company:
       DeliveryCosts = self._BaseCostOfDelivery + self.CalculateDeliveryCost()
     else:
       DeliveryCosts = self._BaseCostOfDelivery
-    Details += "Daily costs for company: " + str(self._DailyCosts) + "\nCost for delivering produce to outlets: " + str(DeliveryCosts) + "\n"
+    Details += "Daily costs for company: £" + str(int(self._DailyCosts)) + ".00" + "\nCost for delivering produce to outlets: £" + str(int(DeliveryCosts)) + ".00" + "\n"
     for Current in range (0, len(self._Outlets)):
       ProfitLossFromThisOutlet = self._Outlets[Current].CalculateDailyProfitLoss(self._AvgCostPerMeal, self._AvgPricePerMeal)
-      Details += "Outlet " + str(Current + 1) + " profit/loss: " + str(ProfitLossFromThisOutlet) + "\n"
+      Details += "Outlet " + str(Current + 1) + " profit/loss: £" + str(ProfitLossFromThisOutlet) + "\n"
       ProfitLossFromOutlets += ProfitLossFromThisOutlet
-    Details += "Previous balance for company: " + str(self._Balance) + "\n"
+    Details += "Previous balance for company: £" + str(int(self._Balance)) + ".00" + "\n"
     self._Balance += ProfitLossFromOutlets - self._DailyCosts - DeliveryCosts
-    Details += "New balance for company: " + str(self._Balance)
+    Details += "New balance for company: £" + str(int(self._Balance)) + ".00"
     return Details
       
   def CloseOutlet(self, ID):
@@ -340,9 +340,9 @@ class Simulation:
     UpOrDown = random.randint(0, 1)
     CompanyNo = random.randint(0, len(self._Companies) - 1)
     if UpOrDown == 0:
-      print("The cost of fuel has gone up by " + str(FuelCostChange) + " for " + self._Companies[CompanyNo].GetName())
+      print("The cost of fuel has gone up by £" + str(int(FuelCostChange)) + ".00" + " for " + self._Companies[CompanyNo].GetName())
     else:
-      print("The cost of fuel has gone down by " + str(FuelCostChange) + " for " + self._Companies[CompanyNo].GetName())
+      print("The cost of fuel has gone down by £" + str(int(FuelCostChange)) + ".00" + " for " + self._Companies[CompanyNo].GetName())
       FuelCostChange *= -1
     self._Companies[CompanyNo].AlterFuelCostPerUnit(FuelCostChange)
         
@@ -365,17 +365,17 @@ class Simulation:
     if CostToChange == 0:
       AmountOfChange = random.randint(1, 19) / 10.0
       if UpOrDown == 0:
-        print("The daily costs for " + self._Companies[CompanyNo].GetName() + " have gone up by " + str(AmountOfChange))
+        print("The daily costs for " + self._Companies[CompanyNo].GetName() + " have gone up by £" + str(int(AmountOfChange)) + ".00")
       else:
-        print("The daily costs for " + self._Companies[CompanyNo].GetName() + " have gone down by " + str(AmountOfChange))
+        print("The daily costs for " + self._Companies[CompanyNo].GetName() + " have gone down by £" + str(int(AmountOfChange)) + ".00")
         AmountOfChange *= -1
       self._Companies[CompanyNo].AlterDailyCosts(AmountOfChange)
     else:
       AmountOfChange = random.randint(1, 9) / 10.0
       if UpOrDown == 0:
-        print("The average cost of a meal for " + self._Companies[CompanyNo].GetName() + " has gone up by " + str(AmountOfChange))
+        print("The average cost of a meal for " + self._Companies[CompanyNo].GetName() + " has gone up by £" + str(int(AmountOfChange)) + ".00")
       else:
-        print("The average cost of a meal for " + self._Companies[CompanyNo].GetName() + " has gone down by " + str(AmountOfChange))
+        print("The average cost of a meal for " + self._Companies[CompanyNo].GetName() + " has gone down by £" + str(int(AmountOfChange)) + ".00")
         AmountOfChange *= -1
       self._Companies[CompanyNo].AlterAvgCostPerMeal(AmountOfChange)
         
