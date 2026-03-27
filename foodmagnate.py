@@ -303,8 +303,14 @@ class Simulation:
       self._Companies[2].OpenOutlet(820, 370)
       self._Companies[2].OpenOutlet(800, 600)
     else:
-      self._NoOfCompanies = int(input("Enter number of companies that exist at start of simulation: "))
-      for Count in range (1, self._NoOfCompanies + 1):
+      while True:
+        try:
+            self._NoOfCompanies = int(input("Enter number of companies that exist at start of simulation: "))
+            break 
+        except ValueError:
+            print("Invalid input. Enter a number")
+    
+    for Count in range(1, self._NoOfCompanies + 1):
         self.AddCompany()
             
   def DisplayMenu(self):
@@ -423,7 +429,12 @@ class Simulation:
         
   def AddCompany(self):
     CompanyName = input("Enter a name for the company: ")
-    Balance = int(input("Enter the starting balance for the company: "))
+    while True:
+      try:
+        Balance = int(input("Enter the starting balance for the company: "))
+        break
+      except ValueError:
+        print("Invalid Input. Enter a Number")
     TypeOfCompany = ""
     while not(TypeOfCompany == "1" or TypeOfCompany == "2" or TypeOfCompany == "3"):
       TypeOfCompany = input("Enter 1 for a fast food company, 2 for a family company or 3 for a named chef company: ")
@@ -466,8 +477,20 @@ class Simulation:
       else:
           print("Invalid outlet ID.")
     elif Choice == "1":
-      X = int(input("Enter X coordinate for new outlet: "))
-      Y = int(input("Enter Y coordinate for new outlet: "))
+      while True:
+        try:
+          X = int(input("Enter X coordinate for new outlet: "))
+          break
+        except ValueError:
+          print("invalid input, please enter an actual coordinate")
+          
+      while True:
+        try:
+          Y = int(input("Enter Y coordinate for new outlet: "))
+          break
+        except ValueError:
+          print("invalid input, please enter an actual coordinate")
+          
       if X >= 0 and X < self._SimulationSettlement.GetXSize() and Y >= 0 and Y < self._SimulationSettlement.GetYSize():
         self._Companies[Index].OpenOutlet(X, Y)
       else:
