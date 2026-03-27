@@ -280,9 +280,24 @@ class Simulation:
     self._BaseCostforDelivery = 100
     Choice = input("Enter L for a large settlement, anything else for a normal size settlement: ")
     if Choice == "L":
-      ExtraX = int(input("Enter additional amount to add to X size of settlement: "))
-      ExtraY = int(input("Enter additional amount to add to Y size of settlement: "))
-      ExtraHouseholds = int(input("Enter additional number of households to add to settlement: "))
+      while True:
+        try:
+          ExtraX = int(input("Enter additional amount to add to X size of settlement: "))
+          break
+        except ValueError:
+          print("Invalid, please enter a number")
+      while True:
+        try:
+          ExtraY = int(input("Enter additional amount to add to Y size of settlement: "))
+          break
+        except ValueError:
+          print("Invalid, please enter a number")
+      while True:
+        try:
+          ExtraHouseholds = int(input("Enter additional number of households to add to settlement: "))
+          break
+        except ValueError:
+          print("Invalid, please enter a number")
       self._SimulationSettlement = LargeSettlement(ExtraX, ExtraY, ExtraHouseholds)
     else:
       self._SimulationSettlement = Settlement()            
